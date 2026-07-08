@@ -1,0 +1,132 @@
+@model BeautyStoreApp.ViewModels.SalesReportViewModel
+
+@{
+    ViewData["Title"] = "Laporan Penjualan";
+}
+
+<div class="container">
+
+    <h2 class="mb-4">
+        Laporan Penjualan
+    </h2>
+
+    <form method="get">
+
+        <div class="row mb-3">
+
+            <div class="col-md-4">
+
+                <label>Tanggal Awal</label>
+
+                <input type="date" name="startDate" value="@Model.StartDate?.ToString("yyyy-MM-dd")"
+                       class="form-control" />
+
+            </div>
+
+            <div class="col-md-4">
+
+                <label>Tanggal Akhir</label>
+
+                <input type="date" name="endDate" value="@Model.EndDate?.ToString("yyyy-MM-dd")" class="form-control" />
+
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end">
+
+                <button class="btn btn-primary">
+
+                    Tampilkan
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>No</th>
+
+                <th>No Order</th>
+
+                <th>Tanggal</th>
+
+                <th>Customer</th>
+
+                <th>Status</th>
+
+                <th class="text-end">Total</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @{
+                int no = 1;
+            }
+
+            @foreach (var item in Model.Orders)
+            {
+                <tr>
+
+                    <td>@no</td>
+
+                    <td>@item.OrderNumber</td>
+
+                    <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+
+                    <td>@item.Customer?.FullName</td>
+
+                    <td>@item.Status</td>
+
+                    <td class="text-end">
+
+                        Rp @item.TotalAmount.ToString("N0")
+
+                    </td>
+
+                </tr>
+
+                no++;
+            }
+
+        </tbody>
+
+        <tfoot>
+
+            <tr>
+
+                <th colspan="5" class="text-end">
+
+                    Grand Total
+
+                </th>
+
+                <th class="text-end">
+
+                    Rp @Model.GrandTotal.ToString("N0")
+
+                </th>
+
+            </tr>
+
+        </tfoot>
+
+    </table>
+    
+    <a asp-action="ExportPdf" asp-route-startDate="@Model.StartDate?.ToString("yyyy-MM-dd")"
+       asp-route-endDate="@Model.EndDate?.ToString("yyyy-MM-dd")" class="btn btn-danger ms-2">
+
+        Export PDF
+
+    </a>
+
+</div>
