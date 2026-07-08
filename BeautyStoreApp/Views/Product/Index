@@ -1,0 +1,114 @@
+@model IEnumerable<BeautyStoreApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Produk";
+}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>Master Produk</h2>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Tambah Produk
+        </a>
+
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    <form method="get" class="mb-3">
+
+        <div class="input-group">
+
+            <input type="text" class="form-control" name="search" placeholder="Cari produk..." />
+
+            <button class="btn btn-outline-primary">
+
+                Cari
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>Gambar</th>
+                <th>Nama Produk</th>
+                <th>Kategori</th>
+                <th>Brand</th>
+                <th>Harga</th>
+                <th>Stok</th>
+
+                <th width="180">Aksi</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Image))
+                        {
+                            <img src="~/images/products/@item.Image" width="70" height="70" class="img-thumbnail"
+                                 style="object-fit:cover;" />
+                        }
+                        else
+                        {
+                            <span>Tidak ada</span>
+                        }
+                    </td>
+
+                    <td>@item.Name</td>
+
+                    <td>@item.Category?.Name</td>
+
+                    <td>@item.Brand?.Name</td>
+
+                    <td>
+                        @item.Price.ToString("C0",
+                        new System.Globalization.CultureInfo("id-ID"))
+                    </td>
+
+                    <td>@item.Stock</td>
+
+                    <td>
+
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">
+
+                            Edit
+
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+
+                            Hapus
+
+                        </a>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
