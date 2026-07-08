@@ -1,0 +1,68 @@
+@model BeautyStoreApp.ViewModels.OrderDetailViewModel
+
+@{
+    ViewData["Title"] = "Tambah Produk";
+}
+
+<div class="container">
+
+    <h2>Tambah Produk</h2>
+
+    <form asp-action="AddProduct" method="post">
+
+        <input asp-for="OrderHeaderId" type="hidden"/>
+
+        <div class="mb-3">
+
+            <label asp-for="ProductId" class="form-label"></label>
+
+            <select asp-for="ProductId"
+                    asp-items="ViewBag.Products"
+                    class="form-select">
+
+                <option value="">-- Pilih Produk --</option>
+
+            </select>
+
+            <span asp-validation-for="ProductId"
+                  class="text-danger"></span>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Qty"
+                   class="form-label"></label>
+
+            <input asp-for="Qty"
+                   class="form-control"/>
+
+            <span asp-validation-for="Qty"
+                  class="text-danger"></span>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary">
+
+            Simpan
+
+        </button>
+
+        <a asp-action="Detail"
+           asp-route-id="@Model.OrderHeaderId"
+           class="btn btn-secondary">
+
+            Kembali
+
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial"/>
+
+}
