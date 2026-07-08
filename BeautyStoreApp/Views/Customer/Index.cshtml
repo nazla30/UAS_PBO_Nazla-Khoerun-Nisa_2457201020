@@ -1,0 +1,83 @@
+@model IEnumerable<BeautyStoreApp.Models.Customer>
+
+@{
+    ViewData["Title"] = "Customer";
+}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Master Customer</h2>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Tambah Customer
+        </a>
+    </div>
+
+    <partial name="_Alert" />
+
+    <form method="get" class="mb-3">
+        <div class="input-group">
+
+            <input type="text"
+                   name="search"
+                   class="form-control"
+                   placeholder="Cari customer..." />
+
+            <button class="btn btn-outline-primary">
+                Cari
+            </button>
+
+        </div>
+    </form>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Telepon</th>
+                <th>Kota</th>
+                <th width="180">Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach(var item in Model)
+        {
+            <tr>
+
+                <td>@item.FullName</td>
+
+                <td>@item.Email</td>
+
+                <td>@item.Phone</td>
+
+                <td>@item.City</td>
+
+                <td>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@item.Id"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.Id"
+                       class="btn btn-danger btn-sm">
+                        Hapus
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+
+        </tbody>
+
+    </table>
+
+</div>

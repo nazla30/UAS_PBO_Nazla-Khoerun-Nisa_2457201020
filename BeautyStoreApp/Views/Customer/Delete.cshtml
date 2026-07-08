@@ -1,0 +1,54 @@
+@model BeautyStoreApp.Models.Customer
+
+@{
+    ViewData["Title"] = "Hapus Customer";
+}
+
+<div class="container">
+
+    <h2>Hapus Customer</h2>
+
+    <div class="alert alert-danger">
+        Apakah Anda yakin ingin menghapus customer ini?
+    </div>
+
+    <table class="table table-bordered">
+
+        <tr>
+            <th width="200">Nama</th>
+            <td>@Model.FullName</td>
+        </tr>
+
+        <tr>
+            <th>Email</th>
+            <td>@Model.Email</td>
+        </tr>
+
+        <tr>
+            <th>Telepon</th>
+            <td>@Model.Phone</td>
+        </tr>
+
+        <tr>
+            <th>Kota</th>
+            <td>@Model.City</td>
+        </tr>
+
+    </table>
+
+    <form asp-action="Delete">
+
+        <input asp-for="Id" type="hidden"/>
+
+        <button class="btn btn-danger">
+            Hapus
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Batal
+        </a>
+
+    </form>
+
+</div>
