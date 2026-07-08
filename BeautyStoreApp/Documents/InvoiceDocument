@@ -1,0 +1,92 @@
+using BeautyStoreApp.Models;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+
+namespace BeautyStoreApp.Documents
+{
+    public class InvoiceDocument : IDocument
+    {
+        private readonly OrderHeader _order;
+
+        public InvoiceDocument(OrderHeader order)
+        {
+            _order = order;
+        }
+
+        public DocumentMetadata GetMetadata()
+        {
+            return DocumentMetadata.Default;
+        }
+
+        public void Compose(IDocumentContainer container)
+        {
+            container.Page(page =>
+            {
+                page.Margin(30);
+
+                page.Header()
+                    .Text("BEAUTY STORE")
+                    .FontSize(24)
+                    .Bold();
+
+                page.Content()
+                    .Column(column =>
+                    {
+                        column.Spacing(10);
+
+                        column.Item().Text($"Invoice : {_order.OrderNumber}");
+
+                        column.Item().Text($"Tanggal : {_order.OrderDate:dd MMM yyyy}");
+
+                        column.Item().Text($"Customer : {_order.Customer?.FullName}");
+
+                        column.Item().Text("");
+
+                        column.Item().Table(table =>
+                        {
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.RelativeColumn(4);
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                            });
+
+                            table.Header(header =>
+                            {
+                                header.Cell().Text("Produk").Bold();
+                                header.Cell().Text("Harga").Bold();
+                                header.Cell().Text("Qty").Bold();
+                                header.Cell().Text("Subtotal").Bold();
+                            });
+
+                            foreach (var item in _order.OrderDetails)
+                            {
+                                table.Cell().Text(item.Product?.Name);
+
+                                table.Cell().Text(item.Price.ToString("N0"));
+
+                                table.Cell().Text(item.Qty.ToString());
+
+                                table.Cell().Text((item.Price * item.Qty).ToString("N0"));
+                            }
+                        });
+
+                        column.Item().AlignRight().Text(
+                            $"Grand Total : Rp {_order.TotalAmount:N0}")
+                            .Bold()
+                            .FontSize(18);
+                    });
+
+                page.Footer()
+                    .AlignCenter()
+                    .Text(x =>
+                    {
+                        x.Span("Beauty Store © ");
+                        x.Span(DateTime.Now.Year.ToString());
+                    });
+            });
+        }
+    }
+}
