@@ -1,0 +1,265 @@
+@model BeautyStoreApp.ViewModels.DashboardViewModel
+
+<h2>Dashboard</h2>
+
+<div class="row">
+
+    <div class="col-md-2">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h6>Total Brand</h6>
+                <h3>@Model.TotalBrand</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h6>Total Category</h6>
+                <h3>@Model.TotalCategory</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h6>Total Product</h6>
+                <h3>@Model.TotalProduct</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card bg-warning text-dark">
+            <div class="card-body">
+                <h6>Total Customer</h6>
+                <h3>@Model.TotalCustomer</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card bg-secondary text-white">
+            <div class="card-body">
+                <h6>Total Order</h6>
+                <h3>@Model.TotalOrder</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="card bg-danger text-white">
+            <div class="card-body">
+                <h6>Total Sales</h6>
+                <h5>Rp @Model.TotalSales.ToString("N0")</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-danger text-white">
+
+                    Produk Stok Menipis
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Produk</th>
+
+                                <th>Stok</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.LowStockProducts)
+                            {
+                                <tr>
+
+                                    <td>@item.Name</td>
+
+                                    <td>
+
+                                        <span class="badge bg-danger">
+
+                                            @item.Stock
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    5 Order Terbaru
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Order</th>
+
+                                <th>Customer</th>
+
+                                <th>Total</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.RecentOrders)
+                            {
+                                <tr>
+
+                                    <td>@item.OrderNumber</td>
+
+                                    <td>@item.Customer?.FullName</td>
+
+                                    <td>
+
+                                        Rp @item.TotalAmount.ToString("N0")
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-success text-white">
+
+            Grafik Penjualan Tahun Ini
+
+        </div>
+
+        <div class="card-body">
+
+            <canvas id="salesChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-info text-white">
+
+            Produk Berdasarkan Kategori
+
+        </div>
+
+        <div class="card-body">
+
+            <canvas id="categoryChart"></canvas>
+
+        </div>
+
+    </div>
+
+    @section Scripts {
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+
+            const ctx = document.getElementById('salesChart');
+
+            new Chart(ctx, {
+
+            type: 'bar',
+
+            data: {
+
+            labels: [
+            @Html.Raw("'" + string.Join("','", Model.MonthLabels) + "'")
+            ],
+
+            datasets: [{
+
+            label: 'Pendapatan',
+
+            data: [
+            @string.Join(",",Model.MonthlySales)
+            ]
+
+            }]
+
+            }
+
+            });
+            const categoryCtx = document.getElementById('categoryChart');
+
+            new Chart(categoryCtx, {
+
+            type: 'pie',
+
+            data: {
+
+            labels: [
+            @Html.Raw("'" + string.Join("','", Model.CategoryLabels) + "'")
+            ],
+
+            datasets: [{
+
+            data: [
+            @string.Join(",", Model.CategoryTotals)
+            ]
+
+            }]
+            }
+            });
+
+        </script>
+
+    }
