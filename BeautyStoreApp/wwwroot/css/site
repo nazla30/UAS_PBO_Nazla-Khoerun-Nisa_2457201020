@@ -1,0 +1,130 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+:root{
+
+    --primary:#EC4899;
+    --secondary:#F9A8D4;
+    --accent:#8B5CF6;
+
+    --success:#10B981;
+    --warning:#F59E0B;
+
+    --background:#FFF7FB;
+
+    --card:#FFFFFF;
+
+    --text:#374151;
+
+}
+
+body{
+    background:#FFF5F8;
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+}
+
+.navbar{
+    background:#E91E63 !important;
+}
+
+.navbar a{
+    color:white !important;
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:#E91E63;
+    border:none;
+}
+
+.btn-primary:hover{
+    background:#D81B60;
+}
+
+/* ==========================
+   SIDEBAR
+========================== */
+
+.offcanvas{
+    background:#212529;
+    color:white;
+    width:270px;
+}
+
+.offcanvas-header{
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.offcanvas-title{
+    font-weight:700;
+}
+
+.offcanvas .btn-close{
+    filter:invert(1);
+}
+
+.list-group{
+    gap:8px;
+}
+
+.list-group-item{
+    background:transparent;
+    color:#ddd;
+    border:none;
+    border-radius:10px;
+    padding:12px 15px;
+    transition:.3s;
+}
+
+.list-group-item i{
+    width:25px;
+    color:#EC4899;;
+}
+
+.list-group-item:hover{
+    background:#343a40;
+    color:white;
+    transform:translateX(5px);
+}
+
+.list-group-item.active{
+    background:#EC4899;;
+    color:white;
+}
+
+.list-group-item.active i{
+    color:white;
+}
