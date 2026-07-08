@@ -1,0 +1,50 @@
+using BeautyStoreApp.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace BeautyStoreApp.Data
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Product> Products => Set<Product>();
+        public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Brand> Brands => Set<Brand>();
+
+        public DbSet<Customer> Customers => Set<Customer>();
+
+        public DbSet<OrderHeader> OrderHeaders => Set<OrderHeader>();
+        public DbSet<OrderDetail> OrderDetails => Set<OrderDetail>();
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Customer -> OrderHeader
+            modelBuilder.Entity<OrderHeader>()
+                .HasOne(o => o.Customer)
+                .WithMany()
+                .HasForeignKey(o => o.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // OrderHeader -> OrderDetail
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(d => d.OrderHeader)
+                .WithMany(h => h.OrderDetails)
+                .HasForeignKey(d => d.OrderHeaderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Product -> OrderDetail
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(d => d.Product)
+                .WithMany()
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+    }
+}
