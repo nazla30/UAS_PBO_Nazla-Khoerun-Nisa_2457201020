@@ -1,0 +1,43 @@
+@model BeautyStoreApp.Models.Brand
+
+@{
+    ViewData["Title"] = "Tambah Kategori";
+}
+
+<div class="container">
+
+    <h2>Tambah Kategori</h2>
+
+    <form asp-action="Create">
+
+        <div class="mb-3">
+
+            <label asp-for="Name"></label>
+
+            <input asp-for="Name" class="form-control" />
+
+            <span asp-validation-for="Name" class="text-danger"></span>
+
+        </div>
+
+        <button class="btn btn-primary">
+
+            Simpan
+
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+
+            Kembali
+
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}
