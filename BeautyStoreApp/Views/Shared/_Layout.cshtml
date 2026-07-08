@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - Beauty Store Admin</title>
+
+    <script type="importmap"></script>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/BeautyStoreApp.styles.css" asp-append-version="true" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+
+        <nav class="navbar navbar-dark bg-dark shadow">
+
+            <div class="container-fluid">
+
+                <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+
+                    <i class="bi bi-list fs-3"></i>
+
+                </button>
+
+                <a class="navbar-brand fw-bold" asp-controller="Dashboard" asp-action="Index">
+
+                    <i class=></i>
+
+                    Beauty Store Admin
+
+                </a>
+
+                <span class="text-white">
+
+                    <i class="bi bi-person-circle"></i>
+
+                    Administrator
+
+                </span>
+
+            </div>
+
+        </nav>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar">
+
+            <div class="offcanvas-header">
+
+                <h5>
+
+                    <i class=""></i>
+
+                    Beauty Store
+
+                </h5>
+
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+                        style="color:#EC4899;">
+
+                    <i class="bi bi-list fs-2"></i>
+
+                </button>
+            </div>
+
+            <div class="offcanvas-body">
+
+                <div class="list-group">
+
+                    <a asp-controller="Dashboard" asp-action="Index" class="list-group-item list-group-item-action">
+
+                        <i class="bi bi-speedometer2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                    <a asp-controller="Brand" asp-action="Index" class="list-group-item list-group-item-action">
+
+                        <i class="bi bi-award"></i>
+
+                        Brand
+
+                    </a>
+
+                    <a asp-controller="Category" asp-action="Index" class="list-group-item list-group-item-action">
+
+                        <i class="bi bi-grid"></i>
+
+                        Category
+
+                    </a>
+
+                    <a asp-controller="Product" asp-action="Index" class="list-group-item list-group-item-action">
+
+                        <i class="bi bi-bag-heart"></i>
+
+                        Product
+
+                    </a>
+
+                    <a asp-controller="Customer" asp-action="Index" class="list-group-item list-group-item-action">
+
+                        <i class="bi bi-people"></i>
+
+                        Customer
+
+                    </a>
+
+                    <a asp-controller="Order" asp-action="Index" class="list-group-item list-group-item-action">
+
+                        <i class="bi bi-cart-check"></i>
+
+                        Order
+
+                    </a>
+
+                    <a asp-controller="Report" asp-action="Sales" class="list-group-item list-group-item-action">
+
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+
+                        Report
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- CONTENT -->
+    <div class="container mt-4">
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+
+                @TempData["Success"]
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert">
+                </button>
+
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+
+                @TempData["Error"]
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert">
+                </button>
+
+            </div>
+        }
+
+        <main>
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-top mt-5 py-3">
+
+        <div class="container text-center text-muted">
+
+            © 2026 Beauty Store Management System
+
+        </div>
+
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>
