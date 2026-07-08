@@ -1,0 +1,96 @@
+using BeautyStoreApp.Models;
+using BeautyStoreApp.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace BeautyStoreApp.Controllers
+{
+    public class BrandController : Controller
+    {
+        private readonly BrandService _service;
+
+        public BrandController(BrandService service)
+        {
+            _service = service;
+        }
+
+        // GET: Brand
+        public IActionResult Index(string search)
+        {
+            var data = string.IsNullOrWhiteSpace(search)
+                ? _service.GetAll()
+                : _service.Search(search);
+
+            return View(data);
+        }
+
+        // GET: Brand/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Brand/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Brand model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            _service.Create(model);
+
+            TempData["Success"] = "Brand berhasil ditambahkan.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Brand/Edit
+        public IActionResult Edit(Guid id)
+        {
+            var brand = _service.GetById(id);
+
+            if (brand == null)
+                return NotFound();
+
+            return View(brand);
+        }
+
+        // POST: Brand/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Brand model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            _service.Update(model);
+
+            TempData["Success"] = "Brand berhasil diperbarui.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Brand/Delete
+        public IActionResult Delete(Guid id)
+        {
+            var brand = _service.GetById(id);
+
+            if (brand == null)
+                return NotFound();
+
+            return View(brand);
+        }
+
+        // POST: Brand/Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(Guid id)
+        {
+            _service.Delete(id);
+
+            TempData["Success"] = "Brand berhasil dihapus.";
+
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}
