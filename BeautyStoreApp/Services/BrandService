@@ -1,0 +1,58 @@
+using BeautyStoreApp.Data;
+using BeautyStoreApp.Models;
+
+namespace BeautyStoreApp.Services
+{
+    public class BrandService
+    {
+        private readonly ApplicationDbContext _context;
+
+        public BrandService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public List<Brand> GetAll()
+        {
+            return _context.Brands
+                .OrderBy(x => x.Name)
+                .ToList();
+        }
+
+        public Brand? GetById(Guid id)
+        {
+            return _context.Brands.Find(id);
+        }
+
+        public void Create(Brand brand)
+        {
+            _context.Brands.Add(brand);
+            _context.SaveChanges();
+        }
+
+        public void Update(Brand brand)
+        {
+            _context.Brands.Update(brand);
+            _context.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            var brand = _context.Brands.Find(id);
+
+            if (brand != null)
+            {
+                _context.Brands.Remove(brand);
+                _context.SaveChanges();
+            }
+        }
+
+        public List<Brand> Search(string keyword)
+        {
+            return _context.Brands
+                .Where(x => x.Name.Contains(keyword))
+                .OrderBy(x => x.Name)
+                .ToList();
+        }
+    }
+}
