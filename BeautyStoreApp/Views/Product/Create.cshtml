@@ -1,0 +1,96 @@
+@model BeautyStoreApp.Models.Product
+
+@{
+    ViewData["Title"] = "Tambah Produk";
+}
+
+<div class="container">
+
+    <h2 class="mb-4">Tambah Produk</h2>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Nama Produk</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label">Kategori</label>
+            <select asp-for="CategoryId"
+                    asp-items="ViewBag.Categories"
+                    class="form-select">
+                <option value="">-- Pilih Kategori --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="BrandId" class="form-label">Brand</label>
+            <select asp-for="BrandId"
+                    asp-items="ViewBag.Brands"
+                    class="form-select">
+                <option value="">-- Pilih Brand --</option>
+            </select>
+            <span asp-validation-for="BrandId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Harga</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Stock" class="form-label">Stok</label>
+            <input asp-for="Stock" class="form-control" />
+            <span asp-validation-for="Stock" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Weight" class="form-label">Berat (gram)</label>
+            <input asp-for="Weight" class="form-control" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Deskripsi</label>
+            <textarea asp-for="Description"
+                      class="form-control"
+                      rows="4"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <!-- Upload Gambar -->
+        <div class="mb-3">
+            <label asp-for="ImageFile" class="form-label">
+                Gambar Produk
+            </label>
+
+            <input asp-for="ImageFile"
+                   type="file"
+                   class="form-control"
+                   accept="image/*" />
+
+            <span asp-validation-for="ImageFile"
+                  class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Simpan
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Kembali
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
