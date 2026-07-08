@@ -1,0 +1,200 @@
+@model BeautyStoreApp.Models.OrderHeader
+
+@{
+    ViewData["Title"] = "Invoice";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h2 class="mb-0">
+                        BEAUTY STORE
+                    </h2>
+
+                    <small>
+                        Invoice Penjualan
+                    </small>
+
+                </div>
+
+                <div class="text-end">
+
+                    <h5 class="mb-0">
+                        @Model.OrderNumber
+                    </h5>
+
+                    <small>
+                        @Model.OrderDate.ToString("dd MMMM yyyy")
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row mb-4">
+
+                <div class="col-md-6">
+
+                    <h5>Data Customer</h5>
+
+                    <table class="table table-borderless">
+
+                        <tr>
+                            <td width="120"><strong>Nama</strong></td>
+                            <td>: @Model.Customer?.FullName</td>
+                        </tr>
+
+                        @if (!string.IsNullOrEmpty(Model.Customer?.Phone))
+                        {
+                            <tr>
+                                <td><strong>Telepon</strong></td>
+                                <td>: @Model.Customer.Phone</td>
+                            </tr>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.Customer?.Address))
+                        {
+                            <tr>
+                                <td><strong>Alamat</strong></td>
+                                <td>: @Model.Customer.Address</td>
+                            </tr>
+                        }
+
+                    </table>
+
+                </div>
+
+                <div class="col-md-6 text-end">
+
+                    <h5>Status</h5>
+
+                    @if (Model.Status == "Completed")
+                    {
+                        <span class="badge bg-success fs-6">
+                            Completed
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark fs-6">
+                            @Model.Status
+                        </span>
+                    }
+
+                </div>
+
+            </div>
+
+            <table class="table table-bordered">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>No</th>
+                        <th>Produk</th>
+                        <th class="text-end">Harga</th>
+                        <th class="text-center">Qty</th>
+                        <th class="text-end">Subtotal</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @{
+                        int no = 1;
+                    }
+
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        <tr>
+
+                            <td>@no</td>
+
+                            <td>
+                                @item.Product?.Name
+                            </td>
+
+                            <td class="text-end">
+                                Rp @item.Price.ToString("N0")
+                            </td>
+
+                            <td class="text-center">
+                                @item.Qty
+                            </td>
+
+                            <td class="text-end">
+                                Rp @((item.Price * item.Qty).ToString("N0"))
+                            </td>
+
+                        </tr>
+
+                        no++;
+                    }
+
+                </tbody>
+
+                <tfoot>
+
+                    <tr>
+
+                        <th colspan="4" class="text-end">
+
+                            Grand Total
+
+                        </th>
+
+                        <th class="text-end text-success">
+
+                            Rp @Model.TotalAmount.ToString("N0")
+
+                        </th>
+
+                    </tr>
+
+                </tfoot>
+
+            </table>
+
+        </div>
+
+        <div class="card-footer">
+
+            <div class="d-flex justify-content-between">
+
+                <a asp-action="Detail"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-secondary">
+
+                    Kembali
+
+                </a>
+
+                <a asp-action="DownloadInvoice"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-danger">
+
+                    Download PDF
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,84 @@
+@model IEnumerable<BeautyStoreApp.Models.OrderHeader>
+
+@{
+    ViewData["Title"] = "Daftar Pesanan";
+}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h2>Daftar Pesanan</h2>
+
+        <a asp-action="Create"
+           class="btn btn-primary">
+
+            + Buat Pesanan
+
+        </a>
+
+    </div>
+
+    <partial name="_Alert" />
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>No Order</th>
+                <th>Tanggal</th>
+                <th>Customer</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th width="220">Aksi</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        @foreach(var item in Model)
+        {
+            <tr>
+
+                <td>@item.OrderNumber</td>
+
+                <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+
+                <td>@item.Customer?.FullName</td>
+
+                <td>@item.TotalAmount.ToString("C")</td>
+
+                <td>@item.Status</td>
+
+                <td>
+
+                    <a asp-action="Detail"
+                       asp-route-id="@item.Id"
+                       class="btn btn-info btn-sm">
+
+                        Detail
+
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.Id"
+                       class="btn btn-danger btn-sm">
+
+                        Hapus
+
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+
+        </tbody>
+
+    </table>
+
+</div>

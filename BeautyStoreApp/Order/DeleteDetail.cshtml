@@ -1,0 +1,18 @@
+@if (Model.Status == "Pending")
+{
+    <a asp-action="Complete"
+       asp-route-id="@Model.Id"
+       class="btn btn-success">
+
+        Selesaikan Pesanan
+
+    </a>
+}
+else
+{
+    <span class="badge bg-success fs-6">
+
+        Pesanan Selesai
+
+    </span>
+}

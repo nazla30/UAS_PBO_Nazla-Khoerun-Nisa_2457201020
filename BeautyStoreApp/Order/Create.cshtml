@@ -1,0 +1,77 @@
+@model BeautyStoreApp.Models.OrderHeader
+
+@{
+    ViewData["Title"] = "Tambah Pesanan";
+}
+
+<div class="container">
+
+    <h2>Tambah Pesanan</h2>
+
+    <form asp-action="Create" method="post">
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger">
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="CustomerId"></label>
+
+            <select asp-for="CustomerId"
+                    asp-items="ViewBag.Customers"
+                    class="form-select">
+
+                <option value="">-- Pilih Customer --</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="OrderDate"></label>
+
+            <input asp-for="OrderDate"
+                   type="date"
+                   class="form-control"/>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Status"></label>
+
+            <select asp-for="Status"
+                    class="form-select">
+
+                <option>Pending</option>
+                <option>Diproses</option>
+                <option>Selesai</option>
+
+            </select>
+
+        </div>
+
+        <button class="btn btn-primary">
+
+            Simpan
+
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            Kembali
+
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial"/>
+
+}
