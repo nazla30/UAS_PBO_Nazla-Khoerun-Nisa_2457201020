@@ -1,0 +1,64 @@
+@model BeautyStoreApp.Models.Customer
+
+@{
+    ViewData["Title"] = "Tambah Customer";
+}
+
+<div class="container">
+
+    <h2>Tambah Customer</h2>
+
+    <form asp-action="Create" method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="FullName"></label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Phone"></label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Address"></label>
+            <textarea asp-for="Address" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="City"></label>
+            <input asp-for="City" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PostalCode"></label>
+            <input asp-for="PostalCode" class="form-control" />
+        </div>
+
+        <button class="btn btn-primary">
+            Simpan
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Kembali
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial"/>
+
+}
